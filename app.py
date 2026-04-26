@@ -1,10 +1,19 @@
+# 1. FIX: SQLite compatibility for ChromaDB (MUST BE AT THE TOP)
+__import__('pysqlite3')
+import sys
+sys.modules['sqlite3'] = sys.modules.pop('pysqlite3')
+
+# 2. Standard Imports
+import os
 import streamlit as st
 from PyPDF2 import PdfReader
 
+# 3. LangChain & RAG Components
 from langchain_text_splitters import RecursiveCharacterTextSplitter
 from langchain_community.embeddings import HuggingFaceEmbeddings
 from langchain_community.vectorstores import Chroma
 
+# 4. LLM Components
 from transformers import pipeline
 from langchain_community.llms import HuggingFacePipeline
 
