@@ -1,10 +1,18 @@
+import torch
+import transformers
+from transformers import pipeline
+
 # 1. FIX: SQLite compatibility for ChromaDB (MUST BE AT THE TOP)
-__import__('pysqlite3')
-import sys
-sys.modules['sqlite3'] = sys.modules.pop('pysqlite3')
+try:
+    __import__('pysqlite3')
+    import sys
+    sys.modules['sqlite3'] = sys.modules.pop('pysqlite3')
+except ImportError:
+    pass
 
 # 2. Standard Imports
 import os
+os.environ["ANON_TELEMETRY"] = "False"
 import streamlit as st
 from PyPDF2 import PdfReader
 
@@ -14,7 +22,6 @@ from langchain_community.embeddings import HuggingFaceEmbeddings
 from langchain_community.vectorstores import Chroma
 
 # 4. LLM Components
-from transformers import pipeline
 from langchain_community.llms import HuggingFacePipeline
 
 
